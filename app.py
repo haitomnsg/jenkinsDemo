@@ -11,7 +11,8 @@ def submit():
     name = request.form.get("name")
     email = request.form.get("email")
     message = request.form.get("message")
-    return render_template("result.html", name=name, email=email, message=message)
+    username = request.form.get("username")
+    return render_template("result.html", name=name, email=email, message=message, username=username)
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=5000)
