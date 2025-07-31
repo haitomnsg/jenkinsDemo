@@ -22,11 +22,27 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                bat """
-                    taskkill /F /IM python.exe || echo "No running app"
-                    start /B "" "%PYTHON_PATH%" app.py
-                """
+                bat '''
+                    :: Kill any running Python app by PID
+                    if exist app.pid (
+                        for /f %%p in (app.pid) do taskkill /F /PID %%p
+                        del app.pid
+                    ) else (
+                        echo No PID file found, starting fresh.
+                    )
+
+                    :: Start the Flask app
+                    start /B "" "C:/Users/haito/.conda/envs/machine_learning/python.exe" "C:/Users/haito/JenkinsDemo/app.py"
+
+                    timeout /t 1 > NUL
+
+                    :: Save the PID
+                    for /f "tokens=2" %%a in ('tasklist /fi "imagename eq python.exe" /fo table ^| findstr /i "python.exe"') do (
+                        echo %%a > app.pid
+                    )
+                '''
             }
         }
+
     }
 }
