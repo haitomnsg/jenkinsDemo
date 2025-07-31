@@ -31,19 +31,18 @@ pipeline {
                         echo No PID file found, starting fresh.
                     )
 
-                    :: Start the Flask app
-                    "C:/Users/haito/.conda/envs/machine_learning/python.exe" "D:/JenkinsDemo/app.py"
+                    :: Start the Flask app from current workspace
+                    start /B "" "%PYTHON_PATH%" "%WORKSPACE%\\app.py"
 
                     :: Sleep 1s (ping workaround for Jenkins)
                     ping -n 2 127.0.0.1 > NUL
 
-                    :: Save the new PID
+                    :: Save the new PID (simplistic approach)
                     for /f "tokens=2" %%a in ('tasklist /fi "imagename eq python.exe" /fo table ^| findstr /i "python.exe"') do (
                         echo %%a > app.pid
                     )
                 '''
             }
         }
-
     }
 }
