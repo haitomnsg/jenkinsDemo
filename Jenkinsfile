@@ -2,8 +2,7 @@ pipeline {
     agent any
 
     environment {
-        CONDA_PATH = 'C:\\Users\\haito\\anaconda3\\Scripts\\activate.bat'  // or wherever your conda is installed
-        ENV_NAME = 'machine_learning'
+        PYTHON_PATH = 'C:\\Users\\haito\\anaconda3\\envs\\machine_learning\\python.exe'
     }
 
     stages {
@@ -16,8 +15,7 @@ pipeline {
         stage('Run Unit Tests') {
             steps {
                 bat """
-                    call %CONDA_PATH% %ENV_NAME%
-                    pytest
+                    "%PYTHON_PATH%" -m pytest
                 """
             }
         }
@@ -25,9 +23,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 bat """
-                    call %CONDA_PATH% %ENV_NAME%
                     taskkill /F /IM python.exe || echo "No running app"
-                    start /B python app.py
+                    start /B "" "%PYTHON_PATH%" app.py
                 """
             }
         }
