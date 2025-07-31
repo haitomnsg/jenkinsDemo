@@ -32,7 +32,7 @@ pipeline {
                     )
 
                     :: Start the Flask app
-                    start /B "" "C:/Users/haito/.conda/envs/machine_learning/python.exe" "D:/JenkinsDemo/app.py"
+                    "C:/Users/haito/.conda/envs/machine_learning/python.exe" "D:/JenkinsDemo/app.py"
 
                     :: Sleep 1s (ping workaround for Jenkins)
                     ping -n 2 127.0.0.1 > NUL
