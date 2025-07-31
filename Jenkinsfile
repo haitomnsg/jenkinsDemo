@@ -2,26 +2,19 @@ pipeline {
     agent any
 
     environment {
-        VENV_DIR = 'venv'
+        VENV_DIR = 'C:/Users/haito/.conda/envs/machine_learning'
     }
 
     stages {
         stage('Clone Repo') {
             steps {
-                git 'https://github.com/YOUR_USERNAME/YOUR_REPO.git'
-            }
-        }
-
-        stage('Install Dependencies') {
-            steps {
-                sh 'python3 -m venv $VENV_DIR'
-                sh './venv/bin/pip install -r requirements.txt'
+                git 'https://github.com/haitomnsg/jenkinsDemo'
             }
         }
 
         stage('Run Unit Tests') {
             steps {
-                sh './venv/bin/pytest'
+                sh 'C:/Users/haito/.conda/envs/machine_learning/Scripts/pytest'
             }
         }
 
@@ -29,7 +22,7 @@ pipeline {
             steps {
                 sh '''
                     pkill -f app.py || true
-                    nohup ./venv/bin/python app.py > log.txt 2>&1 &
+                    nohup C:/Users/haito/.conda/envs/machine_learning/Scripts/python app.py > log.txt 2>&1 &
                 '''
             }
         }
