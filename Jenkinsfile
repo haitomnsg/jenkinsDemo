@@ -23,7 +23,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 bat '''
-                    :: Kill any running Python app by PID
+                    :: Kill running app if PID file exists
                     if exist app.pid (
                         for /f %%p in (app.pid) do taskkill /F /PID %%p
                         del app.pid
@@ -34,9 +34,10 @@ pipeline {
                     :: Start the Flask app
                     start /B "" "C:/Users/haito/.conda/envs/machine_learning/python.exe" "D:/JenkinsDemo/app.py"
 
-                    timeout /t 1 > NUL
+                    :: Sleep 1s (ping workaround for Jenkins)
+                    ping -n 2 127.0.0.1 > NUL
 
-                    :: Save the PID
+                    :: Save the new PID
                     for /f "tokens=2" %%a in ('tasklist /fi "imagename eq python.exe" /fo table ^| findstr /i "python.exe"') do (
                         echo %%a > app.pid
                     )
