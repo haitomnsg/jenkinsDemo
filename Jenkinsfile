@@ -32,7 +32,7 @@ pipeline {
                     )
 
                     :: Start the Flask app
-                    start /B "" "C:/Users/haito/.conda/envs/machine_learning/python.exe" "C:/Users/haito/JenkinsDemo/app.py"
+                    start /B "" "C:/Users/haito/.conda/envs/machine_learning/python.exe" "D:/JenkinsDemo/app.py"
 
                     timeout /t 1 > NUL
 
