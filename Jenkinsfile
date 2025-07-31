@@ -32,7 +32,7 @@ pipeline {
                     )
 
                     :: Start the Flask app from current workspace
-                    start /B "" "%PYTHON_PATH%" "%WORKSPACE%\\app.py"
+                    "%PYTHON_PATH%" "%WORKSPACE%\\app.py"
 
                     :: Sleep 1s (ping workaround for Jenkins)
                     ping -n 2 127.0.0.1 > NUL
